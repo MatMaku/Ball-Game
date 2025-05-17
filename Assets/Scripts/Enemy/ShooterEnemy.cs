@@ -44,7 +44,6 @@ public class ShooterEnemy : Enemy
             }
         }
     }
-
     void RotateTowardsPlayer()
     {
         if (player == null) return;

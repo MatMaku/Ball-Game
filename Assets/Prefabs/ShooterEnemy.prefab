@@ -48,7 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1af4afd65b6d1442b98a8186fa098fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
+  maxHealth: 1
+  ExplosionPrefab: {fileID: 978362255121441180, guid: 9b3b8217766364b4f9deb763f69bf3b6, type: 3}
   projectilePrefab: {fileID: 7927987024283562305, guid: 22a75f1956a5f7048af98c9313bc9e00, type: 3}
   shootPoint: {fileID: 5331714561195286129}
   fireRate: 2

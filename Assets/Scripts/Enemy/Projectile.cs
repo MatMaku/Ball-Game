@@ -8,20 +8,18 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
-        Destroy(this.gameObject, 10f);
+        Destroy(this.gameObject, 5f);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            // Aquí deberías llamar a tu sistema de daño del jugador
-            Debug.Log("Jugador impactado!");
+            other.GetComponent<PlayerHealth>().TakeDamage(damage);
             Destroy(gameObject);
         }
-        else if (other.CompareTag("Ball")) // Tag que le pongas a la bola
+        else if (other.CompareTag("Ball"))
         {
-            Debug.Log("Bala bloqueada!");
             Destroy(gameObject);
         }
     }
