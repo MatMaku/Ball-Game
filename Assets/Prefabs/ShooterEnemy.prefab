@@ -50,6 +50,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 1
   ExplosionPrefab: {fileID: 978362255121441180, guid: 9b3b8217766364b4f9deb763f69bf3b6, type: 3}
+  expPrefab: {fileID: 2782963915928091639, guid: 726d91a41dbdda842ac4307813ccaf7a, type: 3}
+  minExpDrop: 0
+  maxExpDrop: 3
+  expSpreadForce: 2
   projectilePrefab: {fileID: 7927987024283562305, guid: 22a75f1956a5f7048af98c9313bc9e00, type: 3}
   shootPoint: {fileID: 5331714561195286129}
   fireRate: 2
