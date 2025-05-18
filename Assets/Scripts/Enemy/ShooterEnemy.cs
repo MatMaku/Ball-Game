@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class ShooterEnemy : Enemy
 {
-    [Header("Shooting")]
+    [Header("Shooter Settings")]
     public GameObject projectilePrefab;
     public Transform shootPoint;
     public float fireRate = 2f;
     private float fireTimer;
     private Transform player;
 
-    [Header("Entrada")]
+    [Header("Entry")]
     public float entrySpeed = 3f;
     private bool hasReachedPosition = false;
     private Vector2 targetPosition;
     public float borderOffset = 0.8f;
 
-    [Header("Separación")]
+    [Header("Separation")]
     public float separationRadius = 1.5f;
     public float separationForce = 0.5f;
 

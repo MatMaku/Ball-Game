@@ -17,19 +17,29 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        Vector2 newTarget = targetPosition;
+
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(touch.position);
-            targetPosition = new Vector2(worldPos.x, worldPos.y);
+            newTarget = new Vector2(worldPos.x, worldPos.y);
         }
+
     #if UNITY_EDITOR
         if (Input.GetMouseButton(0))
         {
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            targetPosition = new Vector2(worldPos.x, worldPos.y);
+            newTarget = new Vector2(worldPos.x, worldPos.y);
         }
     #endif
+        Vector3 min = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0));
+        Vector3 max = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, 0));
+
+        newTarget.x = Mathf.Clamp(newTarget.x, min.x, max.x);
+        newTarget.y = Mathf.Clamp(newTarget.y, min.y, max.y);
+
+        targetPosition = newTarget;
     }
 
     void FixedUpdate()
