@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 10f;  // Velocidad de seguimiento
+    [Header("Velocidad movimiento")]
+    public float moveSpeed = 5f; 
     private Rigidbody2D rb;
-
     private Vector2 targetPosition;
 
     void Start()
@@ -17,29 +17,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // Detectar el toque o click
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(touch.position);
             targetPosition = new Vector2(worldPos.x, worldPos.y);
         }
-#if UNITY_EDITOR  // Para probar con mouse en la PC
+    #if UNITY_EDITOR
         if (Input.GetMouseButton(0))
         {
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             targetPosition = new Vector2(worldPos.x, worldPos.y);
         }
-#endif
+    #endif
     }
 
     void FixedUpdate()
     {
-        // Movimiento suave hacia el dedo
         Vector2 newPosition = Vector2.Lerp(rb.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
         rb.MovePosition(newPosition);
 
-        // Rotar hacia donde se mueve
         Vector2 direction = targetPosition - rb.position;
         if (direction.sqrMagnitude > 0.01f)
         {

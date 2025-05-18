@@ -54,7 +54,9 @@ MonoBehaviour:
   shootPoint: {fileID: 5331714561195286129}
   fireRate: 2
   entrySpeed: 3
-  borderOffset: 1.5
+  borderOffset: 1
+  separationRadius: 0.5
+  separationForce: 0.2
 --- !u!212 &9207945872579564931
 SpriteRenderer:
   m_ObjectHideFlags: 0

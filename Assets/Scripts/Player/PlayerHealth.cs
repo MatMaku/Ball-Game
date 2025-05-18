@@ -10,14 +10,23 @@ public class PlayerHealth : MonoBehaviour
     public GameObject ExplosionPrefab;
     public GameObject[] LivesUI;
 
+    public float invincibilityDuration = 2f;
+    public float flashInterval = 0.1f;
+
+    private bool isInvincible = false;
+    private SpriteRenderer spriteRenderer;
+
     void Start()
     {
         currentHealth = maxHealth;
         RefreshUI();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void TakeDamage(int amount)
     {
+        if (isInvincible) return;
+
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
@@ -26,6 +35,10 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+        }
+        else
+        {
+            StartCoroutine(InvincibilityCoroutine());
         }
     }
 
@@ -46,5 +59,21 @@ public class PlayerHealth : MonoBehaviour
         {
             LivesUI[i].SetActive(true);
         }
+    }
+
+    IEnumerator InvincibilityCoroutine()
+    {
+        isInvincible = true;
+
+        float elapsed = 0f;
+        while (elapsed < invincibilityDuration)
+        {
+            spriteRenderer.enabled = !spriteRenderer.enabled;
+            yield return new WaitForSeconds(flashInterval);
+            elapsed += flashInterval;
+        }
+
+        spriteRenderer.enabled = true;
+        isInvincible = false;
     }
 }

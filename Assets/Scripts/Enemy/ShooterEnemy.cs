@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ShooterEnemy : Enemy
 {
+    [Header("Shooting")]
     public GameObject projectilePrefab;
     public Transform shootPoint;
     public float fireRate = 2f;
@@ -14,15 +15,17 @@ public class ShooterEnemy : Enemy
     public float entrySpeed = 3f;
     private bool hasReachedPosition = false;
     private Vector2 targetPosition;
+    public float borderOffset = 0.8f;
 
-    public float borderOffset = 0.8f; // Qué tanto entra desde el borde visible
+    [Header("Separación")]
+    public float separationRadius = 1.5f;
+    public float separationForce = 0.5f;
 
     protected override void Awake()
     {
         base.Awake();
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
-        // Calcular targetPosition en base a la pantalla
         CalculateTargetPosition();
     }
 
@@ -36,6 +39,8 @@ public class ShooterEnemy : Enemy
         }
         else
         {
+            ApplySeparation();
+
             fireTimer += Time.deltaTime;
             if (fireTimer >= fireRate)
             {
@@ -44,6 +49,7 @@ public class ShooterEnemy : Enemy
             }
         }
     }
+
     void RotateTowardsPlayer()
     {
         if (player == null) return;
@@ -82,16 +88,42 @@ public class ShooterEnemy : Enemy
 
         Vector2 spawnPos = transform.position;
 
-        // Calcular dirección hacia el centro
         Vector2 directionToCenter = ((Vector2)screenCenter - spawnPos).normalized;
 
-        // Punto en el borde más cercano del viewport
         Vector3 clampedViewportPos = cam.WorldToViewportPoint(spawnPos);
         clampedViewportPos.x = Mathf.Clamp01(clampedViewportPos.x);
         clampedViewportPos.y = Mathf.Clamp01(clampedViewportPos.y);
         Vector3 closestPointInside = cam.ViewportToWorldPoint(clampedViewportPos);
 
-        // Aplicar el offset en la dirección hacia el centro de la pantalla
         targetPosition = (Vector2)closestPointInside + directionToCenter * borderOffset;
+    }
+
+    void ApplySeparation()
+    {
+        Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, separationRadius);
+        Vector2 separation = Vector2.zero;
+        int count = 0;
+
+        foreach (var col in nearbyEnemies)
+        {
+            if (col.gameObject == this.gameObject) continue;
+            if (col.TryGetComponent<Enemy>(out Enemy otherEnemy))
+            {
+                Vector2 diff = (Vector2)transform.position - (Vector2)col.transform.position;
+                float distance = diff.magnitude;
+
+                if (distance > 0 && distance < separationRadius)
+                {
+                    separation += diff.normalized / distance;
+                    count++;
+                }
+            }
+        }
+
+        if (count > 0)
+        {
+            separation /= count;
+            transform.position += (Vector3)(separation * separationForce * Time.deltaTime);
+        }
     }
 }
