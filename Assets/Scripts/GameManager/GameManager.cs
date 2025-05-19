@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class EnemySpawnData
@@ -33,6 +34,10 @@ public class GameManager : MonoBehaviour
     public float distanciaRecorrida = 0f;
     public float velocidad = 10f;
 
+    private void Awake()
+    {
+        Time.timeScale = 1f;
+    }
     private void Start()
     {
         spawnRoutine = StartCoroutine(SpawnEnemiesRoutine());
@@ -91,5 +96,15 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+
+    public void ExitToMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }

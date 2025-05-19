@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 17
   nombre: "Apuesta de tama\xF1o"
-  descripcion: "Agrega 4 bolas pero reduce el tama\xF1o de todas al minimo"
+  descripcion: "Agrega 2 bolas pero reduce el tama\xF1o de todas a la mitad"
   rareza: 2

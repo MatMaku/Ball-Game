@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
+    [Header("Data")]
     public int maxHealth = 4;
     private int currentHealth;
-
-    public GameObject ExplosionPrefab;
-    public GameObject[] LivesUI;
-
     public float invincibilityDuration = 2f;
     public float flashInterval = 0.1f;
+
+    [Header("Prefabs & UI")]
+    public GameObject ExplosionPrefab;
+    public GameObject[] LivesUI;
+    public GameObject GameOverUI;
 
     private bool isInvincible = false;
     private SpriteRenderer spriteRenderer;
@@ -19,8 +21,8 @@ public class PlayerHealth : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        RefreshUI();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        GameOverUI.SetActive(false);
 
         RefreshUI();
     }
@@ -53,6 +55,8 @@ public class PlayerHealth : MonoBehaviour
     void Die()
     {
         Instantiate(ExplosionPrefab, this.transform.position, Quaternion.identity);
+        GameOverUI.SetActive(true);
+        Time.timeScale = 0f;
         gameObject.SetActive(false);
     }
 

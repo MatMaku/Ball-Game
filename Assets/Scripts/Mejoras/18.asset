@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 18
   nombre: Apuesta de longitud
-  descripcion: Agrega 4 bolas pero reduce la longitud de todas al minimo
+  descripcion: Agrega 2 bolas pero reduce la longitud de todas a la mitad
   rareza: 2
