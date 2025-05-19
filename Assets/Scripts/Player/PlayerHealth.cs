@@ -21,6 +21,14 @@ public class PlayerHealth : MonoBehaviour
         currentHealth = maxHealth;
         RefreshUI();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        RefreshUI();
+    }
+
+    public void Heal(int amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
     }
 
     public void TakeDamage(int amount)

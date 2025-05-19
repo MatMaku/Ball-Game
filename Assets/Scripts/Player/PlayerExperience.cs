@@ -7,9 +7,10 @@ public class PlayerExperience : MonoBehaviour
 {
     public int level = 1;
     public int experience = 0;
-    public int expToNextLevel = 5;
+    public int expToNextLevel = 4;
 
     public Slider expSlider;
+    public UpgradeManager upgradeManager;
 
     void Start()
     {
@@ -28,6 +29,8 @@ public class PlayerExperience : MonoBehaviour
         {
             experience -= expToNextLevel;
             LevelUp();
+            upgradeManager.MostrarOpcionesMejora(level);
+            Time.timeScale = 0;
         }
 
         if (expSlider != null)
@@ -40,7 +43,7 @@ public class PlayerExperience : MonoBehaviour
     private void LevelUp()
     {
         level++;
-        expToNextLevel += 5;
+        expToNextLevel += 2;
         Debug.Log("¡Subiste a nivel " + level + "!");
     }
 }
