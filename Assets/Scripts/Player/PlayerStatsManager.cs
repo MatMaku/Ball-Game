@@ -8,6 +8,7 @@ public class PlayerStatsManager : MonoBehaviour
     public GameObject Player;
     public GameObject ExpCollector;
     public GameObject ballWeaponPrefab;
+    public GameObject autoShooterPrefab;
 
     private PlayerController playerController;
     private PlayerHealth playerHealth;
@@ -122,6 +123,9 @@ public class PlayerStatsManager : MonoBehaviour
                 break;
             case 20:
                 AumentarVida(4);
+                break;
+            case 21:
+                Instantiate(autoShooterPrefab, this.transform.position, Quaternion.identity, transform);
                 break;
             default:
                 Debug.LogWarning("ID de mejora no reconocido: " + mejora.id);
